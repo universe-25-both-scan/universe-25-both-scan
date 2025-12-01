@@ -1,6 +1,6 @@
 // CONFIGURATION
 // Point this to your backend folder
-const API_BASE = "http://localhost/sponsosrs/test/backend_api/"; 
+const API_BASE = "https://theonsite.cloud/universe_api/"; 
 
 // --- SHARED FUNCTIONS ---
 async function apiCall(endpoint, formData) {
