@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-card mx-auto">
+        
+        <div id="alertBox" class="alert d-none alert-dismissible fade show" role="alert">
+            <span id="alertMsg"></span>
+            <button type="button" class="btn-close" onclick="this.parentElement.classList.add('d-none')"></button>
+        </div>
+
+        <div id="register-section" class="d-none-custom">
+            <h2 class="form-title"><i class="bi bi-person-plus-fill me-2"></i>Create Account</h2>
+            
+            <form id="formRegister">
+                <input type="hidden" name="action" value="register">
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                    <label><i class="bi bi-person me-2"></i>Username</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="full_name" placeholder="Full Name" required>
+                    <label><i class="bi bi-card-text me-2"></i>Full Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" name="email1" placeholder="Primary Email" required>
+                    <label><i class="bi bi-envelope-at me-2"></i>Email ID 1</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" name="email2" placeholder="Secondary Email">
+                    <label><i class="bi bi-envelope-plus me-2"></i>Email ID 2 (Optional)</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    <label><i class="bi bi-lock-fill me-2"></i>Password</label>
+                </div>
+
+                <button type="submit" class="btn btn-custom">Register Now</button>
+                
+                <div class="toggle-link">
+                    Already have an account? <a onclick="toggleForms('login')">Login Here</a>
+                </div>
+            </form>
+        </div>
+
+        <div id="login-section">
+            <h2 class="form-title"><i class="bi bi-box-arrow-in-right me-2"></i>Welcome Back</h2>
+            
+            <form id="formLogin">
+                <input type="hidden" name="action" value="login">
+
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control" name="login_input" placeholder="Username or Email" required>
+                    <label><i class="bi bi-person-circle me-2"></i>Username or Email</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    <label><i class="bi bi-key-fill me-2"></i>Password</label>
+                </div>
+
+                <button type="submit" class="btn btn-custom">Secure Login</button>
+
+                <div class="toggle-link">
+                    Don't have an account? <a onclick="toggleForms('register')">Create Account</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function toggleForms(target) {
+        if (target === 'login') {
+            document.getElementById('register-section').classList.add('d-none-custom');
+            document.getElementById('login-section').classList.remove('d-none-custom');
+        } else {
+            document.getElementById('login-section').classList.add('d-none-custom');
+            document.getElementById('register-section').classList.remove('d-none-custom');
+        }
+    }
+
+    function showMsg(msg, type) {
+        const box = document.getElementById('alertBox');
+        document.getElementById('alertMsg').innerText = msg;
+        box.className = `alert alert-${type} alert-dismissible fade show`;
+        box.classList.remove('d-none');
+    }
+
+    // LOGIN LOGIC
+    document.getElementById('formLogin').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = await apiCall('auth.php', new FormData(e.target));
+        if(data.status === 'success') {
+            localStorage.setItem('track_user', data.user);
+            window.location.href = 'scan.html';
+        } else {
+            showMsg(data.message, data.status);
+        }
+    });
+
+    // REGISTER LOGIC
+    document.getElementById('formRegister').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = await apiCall('auth.php', new FormData(e.target));
+        if(data.status === 'success') {
+            alert("Registration Successful! Please Login.");
+            toggleForms('login');
+        } else {
+            showMsg(data.message, data.status);
+        }
+    });
+</script>
+</body>
+</html>

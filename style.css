@@ -1,0 +1,106 @@
+/* GLOBAL BODY & FONTS */
+body {
+    background: linear-gradient(to right, #1f4037, #99f2c8);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+/* --- LOGIN & REGISTER CARD STYLES --- */
+.main-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    padding: 40px;
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+.main-card::before, .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 5px;
+    background: linear-gradient(to right, #1f4037, #99f2c8);
+}
+.form-title { color: #1f4037; font-weight: 700; text-align: center; margin-bottom: 25px; }
+.form-floating > label { color: #666; }
+.form-control:focus { border-color: #1f4037; box-shadow: 0 0 0 0.25rem rgba(31, 64, 55, 0.25); }
+
+.btn-custom {
+    background: linear-gradient(to right, #1f4037, #2c5364);
+    border: none; color: white; padding: 12px;
+    font-weight: 600; font-size: 1.1rem; width: 100%;
+    border-radius: 50px;
+    transition: transform 0.2s;
+}
+.btn-custom:hover { transform: scale(1.02); color: #fff; box-shadow: 0 5px 15px rgba(31, 64, 55, 0.3); }
+
+.toggle-link { text-align: center; margin-top: 20px; font-size: 0.9rem; }
+.toggle-link a { color: #1f4037; text-decoration: none; font-weight: bold; cursor: pointer; }
+.toggle-link a:hover { text-decoration: underline; }
+.d-none-custom { display: none; }
+
+/* --- SCAN PAGE STYLES --- */
+.form-container {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 550px;
+    position: relative;
+}
+.logo { display: block; margin: 0 auto 20px auto; max-height: 70px; }
+.scan-h1 { font-size: 1.4rem; font-weight: bold; color: #1f4037; text-align: center; margin-bottom: 25px; }
+
+/* Buttons Container */
+.btn-container { display: flex; gap: 15px; margin-top: 30px; }
+
+/* Scan Button (Submit) */
+.btn-primary-custom {
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    border: none; font-weight: 600; color: white; padding: 10px; border-radius: 6px;
+}
+.btn-primary-custom:hover { color: white; opacity: 0.9; }
+
+/* Download Button - Green Theme */
+.btn-download {
+    background: linear-gradient(to right, #11998e, #38ef7d);
+    border: none; color: white; font-weight: 600;
+    padding: 12px; border-radius: 50px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex: 1; text-align: center; text-decoration: none;
+}
+.btn-download:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4); color: white; }
+
+/* Logout Button - Red Theme */
+.btn-logout {
+    background: linear-gradient(to right, #eb3349, #f45c43);
+    border: none; color: white; font-weight: 600;
+    padding: 12px; border-radius: 50px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex: 1; text-align: center; text-decoration: none;
+}
+.btn-logout:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(235, 51, 73, 0.4); color: white; }
+
+/* --- DOWNLOAD PAGE STYLES --- */
+.info-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 100%; max-width: 500px;
+    text-align: center; position: relative; overflow: hidden;
+}
+.instruction-box {
+    background-color: #f1f8f6; border-left: 5px solid #1f4037;
+    padding: 20px; border-radius: 8px; text-align: left; margin-bottom: 30px;
+    color: #444; font-size: 0.95rem;
+}
+.instruction-box p { margin-bottom: 8px; display: flex; align-items: start; }
+.instruction-box i { color: #1f4037; margin-right: 10px; margin-top: 3px; }

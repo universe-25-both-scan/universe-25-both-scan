@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download Data</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+
+<div class="info-card">
+    <h1>Welcome, <span id="userNameDisplay">User</span>!</h1>
+
+    <div id="msgBox"></div>
+
+    <div class="instruction-box">
+        <p><i class="bi bi-cloud-download-fill"></i> Click the "Download Data" button below.</p>
+        <p><i class="bi bi-gear-wide-connected"></i> System will compile data from <b>tbl_scan</b>.</p>
+        <p><i class="bi bi-envelope-check-fill"></i> The CSV file will be sent to your registered email.</p>
+        <p><i class="bi bi-clock-history"></i> Please check your inbox in 2-5 minutes.</p>
+    </div>
+
+    <button id="btnDownload" class="btn btn-download w-100 rounded-pill mb-3">
+        <i class="bi bi-file-earmark-spreadsheet me-2"></i> Download & Email Data
+    </button>
+
+    <a href="scan.html" class="btn btn-outline-secondary w-100 rounded-pill mb-2">
+        <i class="bi bi-arrow-left me-1"></i> Back to Scan
+    </a>
+
+    <a onclick="logoutUser()" class="btn btn-logout w-100 rounded-pill">
+      <i class="bi bi-box-arrow-left me-1"></i> Logout
+    </a>
+</div>
+
+<script>
+    const user = localStorage.getItem('track_user');
+    if(!user) window.location.href = 'index.html';
+    document.getElementById('userNameDisplay').innerText = user;
+
+    document.getElementById('btnDownload').addEventListener('click', async () => {
+        const btn = document.getElementById('btnDownload');
+        btn.disabled = true;
+        btn.innerHTML = 'Sending...';
+
+        const fd = new FormData();
+        fd.append('download_data', 'true');
+        
+        const data = await apiCall('mailer.php', fd);
+
+        const msgBox = document.getElementById('msgBox');
+        msgBox.innerHTML = `
+            <div class="alert alert-${data.status} alert-dismissible fade show">
+                ${data.message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-file-earmark-spreadsheet me-2"></i> Download & Email Data';
+    });
+
+    function logoutUser() {
+        localStorage.removeItem('track_user');
+        const fd = new FormData(); fd.append('action', 'logout');
+        apiCall('auth.php', fd).then(() => window.location.href = 'index.html');
+    }
+</script>
+</body>
+</html>
