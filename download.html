@@ -37,8 +37,12 @@
 </div>
 
 <script>
+    // Get the user from local storage
     const user = localStorage.getItem('track_user');
+    
+    // Security check: if not logged in, go back
     if(!user) window.location.href = 'index.html';
+    
     document.getElementById('userNameDisplay').innerText = user;
 
     document.getElementById('btnDownload').addEventListener('click', async () => {
@@ -48,6 +52,9 @@
 
         const fd = new FormData();
         fd.append('download_data', 'true');
+        
+        // IMPORTANT: We now send the username explicitly
+        fd.append('username', user); 
         
         const data = await apiCall('mailer.php', fd);
 
@@ -65,8 +72,7 @@
 
     function logoutUser() {
         localStorage.removeItem('track_user');
-        const fd = new FormData(); fd.append('action', 'logout');
-        apiCall('auth.php', fd).then(() => window.location.href = 'index.html');
+        window.location.href = 'index.html';
     }
 </script>
 </body>
